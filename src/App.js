@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Route } from "react-router-dom";
 import { data } from "./data";
-
+import {ProductContext} from "./contexts/ProductContext"
 // Bileşenler
 import Navigation from "./components/Navigation";
 import Products from "./components/Products";
@@ -12,24 +12,30 @@ function App() {
   const [cart, setCart] = useState([]);
 
   const addItem = (item) => {
-    // verilen itemi sepete ekleyin
+    setCart([...cart, item]);
   };
-
+  const removeitem = (item) => {
+    setCart(cart.filter(cartItem => cartItem.id !== item.id));
+  }
+  
+  
   return (
+    <ProductContext.Provider value={{ products, addItem ,cart,removeitem}}>
     <div className="App">
-      <Navigation cart={cart} />
+      <Navigation />
 
       {/* Routelar */}
       <main className="content">
         <Route exact path="/">
-          <Products products={products} addItem={addItem} />
+        <Products />
         </Route>
 
         <Route path="/cart">
-          <ShoppingCart cart={cart} />
+          <ShoppingCart />
         </Route>
       </main>
     </div>
+    </ProductContext.Provider>
   );
 }
 
