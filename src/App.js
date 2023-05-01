@@ -7,15 +7,39 @@ import Navigation from "./components/Navigation";
 import Products from "./components/Products";
 import ShoppingCart from "./components/ShoppingCart";
 
+
+const writelocalstorage =(key,value) => {
+localStorage.setItem(key,JSON.stringify(value));
+}
+const readlocalstorage=(key) =>{
+  return JSON.parse(localStorage.getItem(key));
+}
+const Lskey="g0223";
+
+const initilazecart=()=>{
+  const cart =readlocalstorage(Lskey);
+  if (cart===null){
+    return [];
+  }
+  else{
+              return cart;
+    }
+  }
+
+
 function App() {
   const [products, setProducts] = useState(data);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(()=>initilazecart());
 
   const addItem = (item) => {
-    setCart([...cart, item]);
+    const newcart=([...cart, item]);
+    setCart(newcart);
+    writelocalstorage(Lskey,newcart);
   };
   const removeitem = (item) => {
-    setCart(cart.filter(cartItem => cartItem.id !== item.id));
+   const newcart= (cart.filter(cartItem => cartItem.id !== item.id));
+   setCart(newcart);
+   writelocalstorage(Lskey,newcart);
   }
   
   
