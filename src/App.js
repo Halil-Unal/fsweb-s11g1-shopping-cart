@@ -36,10 +36,11 @@ function App() {
     setCart(newcart);
     writelocalstorage(Lskey,newcart);
   };
-  const removeitem = (id) => {
+  const removeitem = (item) => {
+   //const newcart= (cart.filter(cartItem => cartItem.id !== item.id));
    const newcart=[...cart];
-   let carditem =newcart.findIndex((i)=>i.id===id);
-   newcart.splice(carditem,1);
+   let cartItem= newcart.findIndex((a)=>a.item===item);
+   newcart.splice(cartItem,1);
    setCart(newcart);
    writelocalstorage(Lskey,newcart);
   }
